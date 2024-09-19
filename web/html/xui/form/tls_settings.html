@@ -237,10 +237,10 @@
         <a-input v-model.trim="inbound.stream.reality.splitPacket"></a-input>
       </a-form-item>
       <a-form-item label='Padding Size'>
-        <a-input v-model.trim="inbound.stream.reality.paddingSize"></a-input>
+        <a-input v-model.number="inbound.stream.reality.paddingSize" :min="0"></a-input>
       </a-form-item>
       <a-form-item label='Subchunk Size'>
-        <a-input v-model.trim="inbound.stream.reality.subchunkSize"></a-input>
+        <a-input v-model.number="inbound.stream.reality.subchunkSize" :min="0"></a-input>
       </a-form-item>
     </template>
   </template>

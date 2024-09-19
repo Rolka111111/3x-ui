@@ -444,6 +444,41 @@ func (s *SubService) genVlessLink(inbound *model.Inbound, email string) string {
 					params["fp"] = fp
 				}
 			}
+			if serverRandPacket, ok := searchKey(realitySettings, "serverRandPacket"); ok {
+				if serverRandPacket, ok := serverRandPacket.(string); ok{
+					params["serverandpacket"] = serverRandPacket
+				}
+			}
+			if clientRandPacket, ok := searchKey(realitySettings, "clientRandPacket"); ok {
+				if clientRandPacket, ok := clientRandPacket.(string); ok{
+					params["clientrandpacket"] = clientRandPacket
+				}
+			}
+			if clientRandPacketCount, ok := searchKey(realitySettings, "clientRandPacketCount"); ok {
+				if clientRandPacketCount, ok := clientRandPacketCount.(string); ok{
+					params["clientrandpacketcount"] = clientRandPacketCount
+				}
+			}
+			if serverRandPacketCount, ok := searchKey(realitySettings, "serverRandPacketCount"); ok {
+				if serverRandPacketCount, ok := serverRandPacketCount.(string); ok{
+					params["serverandpacketcount"] = serverRandPacketCount
+				}
+			}
+			if splitPacket, ok := searchKey(realitySettings, "splitPacket"); ok {
+				if splitPacket, ok := splitPacket.(string); ok{
+					params["splitpacket"] = splitPacket
+				}
+			}
+			if paddingSize, ok := searchKey(realitySettings, "paddingSize"); ok {
+				if paddingSize, ok := paddingSize.(string); ok{
+					params["paddingsize"] = paddingSize
+				}
+			}
+			if subchunkSize, ok := searchKey(realitySettings, "subchunkSize"); ok {
+				if subchunkSize, ok := subchunkSize.(string); ok{
+					params["subchunksize"] = subchunkSize
+				}
+			}
 			params["spx"] = "/" + random.Seq(15)
 		}
 

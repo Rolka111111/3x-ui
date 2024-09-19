@@ -279,6 +279,35 @@ func (s *SubJsonService) realityData(rData map[string]interface{}) map[string]in
 		rltyData["serverName"] = ""
 	}
 
+	serverRandPacket, ok := rData["serverRandPacket"]
+	if ok{
+		rltyData["serverRandPacket"] = serverRandPacket.(string)
+	}
+	clientRandPacket, ok := rData["clientRandPacket"]
+	if ok{
+		rltyData["clientRandPacket"] = clientRandPacket.(string)
+	}
+	clientRandPacketCount, ok := rData["clientRandPacketCount"]
+	if ok{
+		rltyData["clientRandPacketCount"] = clientRandPacketCount.(string)
+	}
+	serverRandPacketCount, ok := rData["serverRandPacketCount"]
+	if ok{
+		rltyData["serverRandPacketCount"] = serverRandPacketCount.(string)
+	}
+	splitPacket, ok := rData["splitPacket"]
+	if ok{
+		rltyData["splitPacket"] = splitPacket.(string)
+	}
+	paddingSize, ok := rData["paddingSize"]
+	if ok{
+		rltyData["paddingSize"] = paddingSize.(uint32)
+	}
+	subchunkSize, ok := rData["subchunkSize"]
+	if ok{
+		rltyData["subchunkSize"] = subchunkSize.(uint32)
+	}
+
 	return rltyData
 }
 
