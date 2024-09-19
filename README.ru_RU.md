@@ -32,10 +32,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/LuckyLuke-a/3x-ui/master/insta
 
 ## Установка определённой версии
 
-Чтобы установить нужную вам версию, добавьте номер версии в конец команды установки. Например, `v2.4.4`:
+Чтобы установить нужную вам версию, добавьте номер версии в конец команды установки. Например, `v2.4.5`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/LuckyLuke-a/3x-ui/master/install.sh) v2.4.4
+bash <(curl -Ls https://raw.githubusercontent.com/LuckyLuke-a/3x-ui/master/install.sh) v2.4.5
 ```
 
 ## SSL Сертификат

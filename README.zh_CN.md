@@ -32,10 +32,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/LuckyLuke-a/3x-ui/master/insta
 
 ## 安装指定版本
 
-要安装所需的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.4.4`:
+要安装所需的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.4.5`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/LuckyLuke-a/3x-ui/master/install.sh) v2.4.4
+bash <(curl -Ls https://raw.githubusercontent.com/LuckyLuke-a/3x-ui/master/install.sh) v2.4.5
 ```
 
 ### SSL证书
