@@ -34,16 +34,19 @@
     </a-form-item>
     <a-form-item label="Min/Max Version">
       <a-input-group compact>
-        <a-select v-model="inbound.stream.tls.minVersion" style="width: 50%" :dropdown-class-name="themeSwitcher.currentTheme">
+        <a-select v-model="inbound.stream.tls.minVersion" style="width: 50%"
+          :dropdown-class-name="themeSwitcher.currentTheme">
           <a-select-option v-for="key in TLS_VERSION_OPTION" :value="key">[[ key ]]</a-select-option>
         </a-select>
-        <a-select v-model="inbound.stream.tls.maxVersion" style="width: 50%" :dropdown-class-name="themeSwitcher.currentTheme">
+        <a-select v-model="inbound.stream.tls.maxVersion" style="width: 50%"
+          :dropdown-class-name="themeSwitcher.currentTheme">
           <a-select-option v-for="key in TLS_VERSION_OPTION" :value="key">[[ key ]]</a-select-option>
         </a-select>
       </a-input-group>
     </a-form-item>
     <a-form-item label="uTLS">
-      <a-select v-model="inbound.stream.tls.settings.fingerprint" style="width: 50%" :dropdown-class-name="themeSwitcher.currentTheme">
+      <a-select v-model="inbound.stream.tls.settings.fingerprint" style="width: 50%"
+        :dropdown-class-name="themeSwitcher.currentTheme">
         <a-select-option value=''>None</a-select-option>
         <a-select-option v-for="key in UTLS_FINGERPRINT" :value="key">[[ key ]]</a-select-option>
       </a-select>
@@ -71,8 +74,10 @@
           <a-radio-button :value="true">{{ i18n "pages.inbounds.certificatePath" }}</a-radio-button>
           <a-radio-button :value="false">{{ i18n "pages.inbounds.certificateContent" }}</a-radio-button>
         </a-radio-group>
-        <a-button icon="plus" v-if="index === 0" type="primary" size="small" @click="inbound.stream.tls.addCert()" style="margin-left: 10px"></a-button>
-        <a-button icon="minus" v-if="inbound.stream.tls.certs.length>1" type="primary" size="small" @click="inbound.stream.tls.removeCert(index)" style="margin-left: 10px"></a-button>
+        <a-button icon="plus" v-if="index === 0" type="primary" size="small" @click="inbound.stream.tls.addCert()"
+          style="margin-left: 10px"></a-button>
+        <a-button icon="minus" v-if="inbound.stream.tls.certs.length>1" type="primary" size="small"
+          @click="inbound.stream.tls.removeCert(index)" style="margin-left: 10px"></a-button>
       </a-form-item>
       <template v-if="cert.useFile">
         <a-form-item label='{{ i18n "pages.inbounds.publicKey" }}'>
@@ -82,7 +87,8 @@
           <a-input v-model.trim="cert.keyFile"></a-input>
         </a-form-item>
         <a-form-item label=" ">
-          <a-button type="primary" icon="import" @click="setDefaultCertData(index)">{{ i18n "pages.inbounds.setDefaultCert" }}</a-button>
+          <a-button type="primary" icon="import" @click="setDefaultCertData(index)">{{ i18n
+            "pages.inbounds.setDefaultCert" }}</a-button>
         </a-form-item>
       </template>
       <template v-else>
@@ -129,8 +135,10 @@
           <a-radio-button :value="true">{{ i18n "pages.inbounds.certificatePath" }}</a-radio-button>
           <a-radio-button :value="false">{{ i18n "pages.inbounds.certificateContent" }}</a-radio-button>
         </a-radio-group>
-        <a-button icon="plus" v-if="index === 0" type="primary" size="small" @click="inbound.stream.xtls.addCert()" style="margin-left: 10px"></a-button>
-        <a-button icon="minus" v-if="inbound.stream.xtls.certs.length>1" type="primary" size="small" @click="inbound.stream.xtls.removeCert(index)" style="margin-left: 10px"></a-button>
+        <a-button icon="plus" v-if="index === 0" type="primary" size="small" @click="inbound.stream.xtls.addCert()"
+          style="margin-left: 10px"></a-button>
+        <a-button icon="minus" v-if="inbound.stream.xtls.certs.length>1" type="primary" size="small"
+          @click="inbound.stream.xtls.removeCert(index)" style="margin-left: 10px"></a-button>
       </a-form-item>
       <template v-if="cert.useFile">
         <a-form-item label='{{ i18n "pages.inbounds.publicKey" }}'>
@@ -140,7 +148,8 @@
           <a-input v-model.trim="cert.keyFile"></a-input>
         </a-form-item>
         <a-form-item label=" ">
-          <a-button type="primary" icon="import" @click="setDefaultCertXtls(index)">{{ i18n "pages.inbounds.setDefaultCert" }}</a-button>
+          <a-button type="primary" icon="import" @click="setDefaultCertXtls(index)">{{ i18n
+            "pages.inbounds.setDefaultCert" }}</a-button>
         </a-form-item>
       </template>
       <template v-else>
@@ -174,7 +183,8 @@
       <a-input-number v-model.number="inbound.stream.reality.xver" :min="0"></a-input-number>
     </a-form-item>
     <a-form-item label='uTLS'>
-      <a-select v-model="inbound.stream.reality.settings.fingerprint" style="width: 50%" :dropdown-class-name="themeSwitcher.currentTheme">
+      <a-select v-model="inbound.stream.reality.settings.fingerprint" style="width: 50%"
+        :dropdown-class-name="themeSwitcher.currentTheme">
         <a-select-option v-for="key in UTLS_FINGERPRINT" :value="key">[[ key ]]</a-select-option>
       </a-select>
     </a-form-item>
@@ -192,7 +202,8 @@
         <a-tooltip>
           <template slot="title">
             <span>{{ i18n "reset" }}</span>
-          </template> Short IDs <a-icon @click="inbound.stream.reality.shortIds = RandomUtil.randomShortIds()" type="sync"></a-icon>
+          </template> Short IDs <a-icon @click="inbound.stream.reality.shortIds = RandomUtil.randomShortIds()"
+            type="sync"></a-icon>
         </a-tooltip>
       </template>
       <a-input v-model.trim="inbound.stream.reality.shortIds"></a-input>
@@ -209,6 +220,29 @@
     <a-form-item label=" ">
       <a-button type="primary" icon="import" @click="getNewX25519Cert">Get New Cert</a-button>
     </a-form-item>
+    <template v-if="inbound.canShowSegaroParams()">
+      <a-form-item label='Server Rand Packet'>
+        <a-input v-model.trim="inbound.stream.reality.serverRandPacket"></a-input>
+      </a-form-item>
+      <a-form-item label='Client Rand Packet'>
+        <a-input v-model.trim="inbound.stream.reality.clientRandPacket"></a-input>
+      </a-form-item>
+      <a-form-item label='Client Rand Packet Count'>
+        <a-input v-model.trim="inbound.stream.reality.clientRandPacketCount"></a-input>
+      </a-form-item>
+      <a-form-item label='Server Rand Packet Count'>
+        <a-input v-model.trim="inbound.stream.reality.serverRandPacketCount"></a-input>
+      </a-form-item>
+      <a-form-item label='Split Packet'>
+        <a-input v-model.trim="inbound.stream.reality.splitPacket"></a-input>
+      </a-form-item>
+      <a-form-item label='Padding Size'>
+        <a-input v-model.trim="inbound.stream.reality.paddingSize"></a-input>
+      </a-form-item>
+      <a-form-item label='Subchunk Size'>
+        <a-input v-model.trim="inbound.stream.reality.subchunkSize"></a-input>
+      </a-form-item>
+    </template>
   </template>
 </a-form>
 {{end}}

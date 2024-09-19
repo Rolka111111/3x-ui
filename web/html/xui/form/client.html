@@ -22,8 +22,10 @@
                     <span>{{ i18n "reset" }}</span>
                 </template>
                 {{ i18n "password" }}
-                <a-icon v-if="inbound.protocol === Protocols.SHADOWSOCKS"@click="client.password = RandomUtil.randomShadowsocksPassword()" type="sync"></a-icon>
-                <a-icon v-if="inbound.protocol === Protocols.TROJAN" @click="client.password = RandomUtil.randomSeq(10)"type="sync"> </a-icon>
+                <a-icon v-if="inbound.protocol === Protocols.SHADOWSOCKS"
+                    @click="client.password = RandomUtil.randomShadowsocksPassword()" type="sync"></a-icon>
+                <a-icon v-if="inbound.protocol === Protocols.TROJAN" @click="client.password = RandomUtil.randomSeq(10)"
+                    type="sync"> </a-icon>
             </a-tooltip>
         </template>
         <a-input v-model.trim="client.password"></a-input>
@@ -74,7 +76,7 @@
                 <template slot="title">
                     <span>{{ i18n "pages.inbounds.IPLimitDesc"}}</span>
                 </template>
-                    <span>{{ i18n "pages.inbounds.IPLimit"}} </span>
+                <span>{{ i18n "pages.inbounds.IPLimit"}} </span>
                 <a-icon type="question-circle"></a-icon>
             </a-tooltip>
         </template>
@@ -86,7 +88,7 @@
                 <template slot="title">
                     <span>{{ i18n "pages.inbounds.IPLimitlogDesc" }}</span>
                 </template>
-                    <span>{{ i18n "pages.inbounds.IPLimitlog" }} </span>
+                <span>{{ i18n "pages.inbounds.IPLimitlog" }} </span>
                 <a-icon type="question-circle"></a-icon>
             </a-tooltip>
         </template>
@@ -113,7 +115,7 @@
     <a-form-item v-if="inbound.canEnableTlsFlow()" label='Flow'>
         <a-select v-model="client.flow" :dropdown-class-name="themeSwitcher.currentTheme">
             <a-select-option value="" selected>{{ i18n "none" }}</a-select-option>
-            <a-select-option v-for="key in TLS_FLOW_CONTROL" :value="key">[[ key ]]</a-select-option>
+            <a-select-option v-for="key in TLS_FLOW_CONTROL_CAN_SELECTED" :value="key">[[ key ]]</a-select-option>
         </a-select>
     </a-form-item>
     <a-form-item>
@@ -136,8 +138,7 @@
         </a-tag>
         <a-tooltip>
             <template slot="title">{{ i18n "pages.inbounds.resetTraffic" }}</template>
-            <a-icon type="retweet"
-                @click="resetClientTraffic(client.email,clientStats.inboundId,$event.target)"
+            <a-icon type="retweet" @click="resetClientTraffic(client.email,clientStats.inboundId,$event.target)"
                 v-if="client.email.length > 0"></a-icon>
         </a-tooltip>
     </a-form-item>
@@ -158,7 +159,7 @@
         <a-date-picker v-if="datepicker == 'gregorian'" :show-time="{ format: 'HH:mm:ss' }" format="YYYY-MM-DD HH:mm:ss"
             :dropdown-class-name="themeSwitcher.currentTheme" v-model="client._expiryTime"></a-date-picker>
         <persian-datepicker v-else placeholder='{{ i18n "pages.settings.datepickerPlaceholder" }}'
-                            value="client._expiryTime" v-model="client._expiryTime"></persian-datepicker>
+            value="client._expiryTime" v-model="client._expiryTime"></persian-datepicker>
         <a-tag color="red" v-if="isEdit && isExpiry">Expired</a-tag>
     </a-form-item>
     <a-form-item v-if="client.expiryTime != 0">

@@ -28,8 +28,11 @@ const XTLS_FLOW_CONTROL = {
 
 const TLS_FLOW_CONTROL = {
     VISION: "xtls-rprx-vision",
+    SEGARO: "xtls-segaro-vision",
     VISION_UDP443: "xtls-rprx-vision-udp443",
 };
+
+let TLS_FLOW_CONTROL_CAN_SELECTED;
 
 const TLS_VERSION_OPTION = {
     TLS10: "1.0",
@@ -529,11 +532,11 @@ class SplitHTTPStreamSettings extends XrayCommonClass {
         scMinPostsIntervalMs = "10-50",
         noSSEHeader = false,
         xPaddingBytes = "100-1000",
-        xmux = { 
-            maxConnections: 0, 
-            maxConcurrency: 0, 
-            cMaxReuseTimes: 0, 
-            cMaxLifetimeMs: 0 
+        xmux = {
+            maxConnections: 0,
+            maxConcurrency: 0,
+            cMaxReuseTimes: 0,
+            cMaxLifetimeMs: 0
         }
     ) {
         super();
@@ -545,7 +548,7 @@ class SplitHTTPStreamSettings extends XrayCommonClass {
         this.scMinPostsIntervalMs = scMinPostsIntervalMs;
         this.noSSEHeader = noSSEHeader;
         this.xPaddingBytes = xPaddingBytes;
-        this.xmux = xmux;   
+        this.xmux = xmux;
     }
 
     addHeader(name, value) {
@@ -898,6 +901,13 @@ class RealityStreamSettings extends XrayCommonClass {
         maxClient = '',
         maxTimediff = 0,
         shortIds = RandomUtil.randomShortIds(),
+        serverRandPacket = "800-1800",
+        clientRandPacket = "60-250",
+        clientRandPacketCount = "1-2",
+        serverRandPacketCount = "1-5",
+        splitPacket = "300-900",
+        paddingSize = 5,
+        subchunkSize = 12,
         settings = new RealityStreamSettings.Settings()
     ) {
         super();
@@ -909,8 +919,15 @@ class RealityStreamSettings extends XrayCommonClass {
         this.minClient = minClient;
         this.maxClient = maxClient;
         this.maxTimediff = maxTimediff;
-        this.shortIds = Array.isArray(shortIds) ? shortIds.join(",") : shortIds; 
+        this.shortIds = Array.isArray(shortIds) ? shortIds.join(",") : shortIds;
         this.settings = settings;
+        this.serverRandPacket = serverRandPacket;
+        this.clientRandPacket = clientRandPacket;
+        this.clientRandPacketCount = clientRandPacketCount;
+        this.serverRandPacketCount = serverRandPacketCount;
+        this.splitPacket = splitPacket;
+        this.paddingSize = paddingSize;
+        this.subchunkSize = subchunkSize;
     }
 
     static fromJson(json = {}) {
@@ -920,7 +937,8 @@ class RealityStreamSettings extends XrayCommonClass {
                 json.settings.publicKey,
                 json.settings.fingerprint,
                 json.settings.serverName,
-                json.settings.spiderX);}
+                json.settings.spiderX);
+        }
         return new RealityStreamSettings(
             json.show,
             json.xver,
@@ -931,6 +949,13 @@ class RealityStreamSettings extends XrayCommonClass {
             json.maxClient,
             json.maxTimediff,
             json.shortIds,
+            json.serverRandPacket,
+            json.clientRandPacket,
+            json.clientRandPacketCount,
+            json.serverRandPacketCount,
+            json.splitPacket,
+            json.paddingSize,
+            json.subchunkSize,
             json.settings,
         );
     }
@@ -947,6 +972,13 @@ class RealityStreamSettings extends XrayCommonClass {
             maxTimediff: this.maxTimediff,
             shortIds: this.shortIds.split(","),
             settings: this.settings,
+            serverRandPacket: this.serverRandPacket,
+            clientRandPacket: this.clientRandPacket,
+            clientRandPacketCount: this.clientRandPacketCount,
+            serverRandPacketCount: this.serverRandPacketCount,
+            splitPacket: this.splitPacket,
+            paddingSize: this.paddingSize,
+            subchunkSize: this.subchunkSize
         };
     }
 }
@@ -1415,8 +1447,30 @@ class Inbound extends XrayCommonClass {
 
     //this is used for xtls-rprx-vision
     canEnableTlsFlow() {
-        if (((this.stream.security === 'tls') || (this.stream.security === 'reality')) && (this.network === "tcp")) {
-            return this.protocol === Protocols.VLESS;
+        if (this.protocol === Protocols.VLESS && this.network === "tcp" && this.stream.security === 'tls') {
+            TLS_FLOW_CONTROL_CAN_SELECTED = {
+                VISION: TLS_FLOW_CONTROL.VISION,
+                VISION_UDP443: TLS_FLOW_CONTROL.VISION_UDP443
+            };
+            return true;
+        } else if (this.protocol === Protocols.VLESS && this.stream.security === 'reality') {
+            if (this.network === "http" || this.network === "grpc") {
+                TLS_FLOW_CONTROL_CAN_SELECTED = { SEGARO: TLS_FLOW_CONTROL.SEGARO };
+                return true;
+            } else if (this.network == "tcp") {
+                TLS_FLOW_CONTROL_CAN_SELECTED = TLS_FLOW_CONTROL;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    canShowSegaroParams() {
+        // if at least one client use segaro flow, show segaro params
+        for (let client of this.clients) {
+            if (client.flow === TLS_FLOW_CONTROL.SEGARO && (this.network === "tcp" || this.network === "http" || this.network === "grpc")) {
+                return true;
+            }
         }
         return false;
     }
@@ -1615,8 +1669,29 @@ class Inbound extends XrayCommonClass {
             if (!ObjectUtil.isEmpty(this.stream.reality.settings.spiderX)) {
                 params.set("spx", this.stream.reality.settings.spiderX);
             }
-            if (type == 'tcp' && !ObjectUtil.isEmpty(flow)) {
+            if ((type == 'tcp' && !ObjectUtil.isEmpty(flow)) || this.canEnableTlsFlow()) {
                 params.set("flow", flow);
+            }
+            if (!ObjectUtil.isEmpty(this.stream.reality.serverRandPacket)) {
+                params.set("serverandpacket", this.stream.reality.serverRandPacket);
+            }
+            if (!ObjectUtil.isEmpty(this.stream.reality.clientRandPacket)) {
+                params.set("clientrandpacket", this.stream.reality.clientRandPacket);
+            }
+            if (!ObjectUtil.isEmpty(this.stream.reality.clientRandPacketCount)) {
+                params.set("clientrandpacketcount", this.stream.reality.clientRandPacketCount);
+            }
+            if (!ObjectUtil.isEmpty(this.stream.reality.serverRandPacketCount)) {
+                params.set("serverandpacketcount", this.stream.reality.serverRandPacketCount);
+            }
+            if (!ObjectUtil.isEmpty(this.stream.reality.splitPacket)) {
+                params.set("splitpacket", this.stream.reality.splitPacket);
+            }
+            if (this.stream.reality.paddingSize > 0) {
+                params.set("paddingsize", this.stream.reality.paddingSize);
+            }
+            if (this.stream.reality.subchunkSize > 0) {
+                params.set("subchunksize", this.stream.reality.subchunkSize);
             }
         }
 
@@ -2602,7 +2677,7 @@ Inbound.SocksSettings.SocksAccount = class extends XrayCommonClass {
 
 Inbound.HttpSettings = class extends Inbound.Settings {
     constructor(
-        protocol, 
+        protocol,
         accounts = [new Inbound.HttpSettings.HttpAccount()],
         allowTransparent = false,
     ) {
