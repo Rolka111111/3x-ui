@@ -1445,7 +1445,6 @@ class Inbound extends XrayCommonClass {
         return ["tcp", "ws", "http", "grpc", "httpupgrade", "splithttp"].includes(this.network);
     }
 
-    //this is used for xtls-rprx-vision
     canEnableTlsFlow() {
         if (this.protocol === Protocols.VLESS && this.network === "tcp" && this.stream.security === 'tls') {
             TLS_FLOW_CONTROL_CAN_SELECTED = {
@@ -1457,7 +1456,7 @@ class Inbound extends XrayCommonClass {
             if (this.network === "http" || this.network === "grpc") {
                 TLS_FLOW_CONTROL_CAN_SELECTED = { SEGARO: TLS_FLOW_CONTROL.SEGARO };
                 return true;
-            } else if (this.network == "tcp") {
+            } else if (this.network === "tcp") {
                 TLS_FLOW_CONTROL_CAN_SELECTED = TLS_FLOW_CONTROL;
                 return true;
             }
@@ -1669,29 +1668,32 @@ class Inbound extends XrayCommonClass {
             if (!ObjectUtil.isEmpty(this.stream.reality.settings.spiderX)) {
                 params.set("spx", this.stream.reality.settings.spiderX);
             }
-            if ((type == 'tcp' && !ObjectUtil.isEmpty(flow)) || this.canEnableTlsFlow()) {
+            if (type === 'tcp' && !ObjectUtil.isEmpty(flow)) {
                 params.set("flow", flow);
             }
-            if (!ObjectUtil.isEmpty(this.stream.reality.serverRandPacket)) {
-                params.set("serverandpacket", this.stream.reality.serverRandPacket);
-            }
-            if (!ObjectUtil.isEmpty(this.stream.reality.clientRandPacket)) {
-                params.set("clientrandpacket", this.stream.reality.clientRandPacket);
-            }
-            if (!ObjectUtil.isEmpty(this.stream.reality.clientRandPacketCount)) {
-                params.set("clientrandpacketcount", this.stream.reality.clientRandPacketCount);
-            }
-            if (!ObjectUtil.isEmpty(this.stream.reality.serverRandPacketCount)) {
-                params.set("serverandpacketcount", this.stream.reality.serverRandPacketCount);
-            }
-            if (!ObjectUtil.isEmpty(this.stream.reality.splitPacket)) {
-                params.set("splitpacket", this.stream.reality.splitPacket);
-            }
-            if (this.stream.reality.paddingSize > 0) {
-                params.set("paddingsize", this.stream.reality.paddingSize);
-            }
-            if (this.stream.reality.subchunkSize > 0) {
-                params.set("subchunksize", this.stream.reality.subchunkSize);
+            if (flow === TLS_FLOW_CONTROL.SEGARO) {
+                params.set("flow", flow);
+                if (!ObjectUtil.isEmpty(this.stream.reality.serverRandPacket)) {
+                    params.set("serverandpacket", this.stream.reality.serverRandPacket);
+                }
+                if (!ObjectUtil.isEmpty(this.stream.reality.clientRandPacket)) {
+                    params.set("clientrandpacket", this.stream.reality.clientRandPacket);
+                }
+                if (!ObjectUtil.isEmpty(this.stream.reality.clientRandPacketCount)) {
+                    params.set("clientrandpacketcount", this.stream.reality.clientRandPacketCount);
+                }
+                if (!ObjectUtil.isEmpty(this.stream.reality.serverRandPacketCount)) {
+                    params.set("serverandpacketcount", this.stream.reality.serverRandPacketCount);
+                }
+                if (!ObjectUtil.isEmpty(this.stream.reality.splitPacket)) {
+                    params.set("splitpacket", this.stream.reality.splitPacket);
+                }
+                if (this.stream.reality.paddingSize > 0) {
+                    params.set("paddingsize", this.stream.reality.paddingSize);
+                }
+                if (this.stream.reality.subchunkSize > 0) {
+                    params.set("subchunksize", this.stream.reality.subchunkSize);
+                }
             }
         }
 
