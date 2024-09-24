@@ -28,8 +28,9 @@ const XTLS_FLOW_CONTROL = {
 
 const TLS_FLOW_CONTROL = {
     VISION: "xtls-rprx-vision",
-    SEGARO: "xtls-segaro-vision",
     VISION_UDP443: "xtls-rprx-vision-udp443",
+    SEGARO: "xtls-segaro-vision",
+    SEGARO_UDP443: "xtls-segaro-vision-udp443",
 };
 
 let TLS_FLOW_CONTROL_CAN_SELECTED;
@@ -1454,7 +1455,10 @@ class Inbound extends XrayCommonClass {
             return true;
         } else if (this.protocol === Protocols.VLESS && this.stream.security === 'reality') {
             if (this.network === "http" || this.network === "grpc") {
-                TLS_FLOW_CONTROL_CAN_SELECTED = { SEGARO: TLS_FLOW_CONTROL.SEGARO };
+                TLS_FLOW_CONTROL_CAN_SELECTED = {
+                    SEGARO: TLS_FLOW_CONTROL.SEGARO,
+                    SEGARO_UDP443: TLS_FLOW_CONTROL.SEGARO_UDP443,
+                };
                 return true;
             } else if (this.network === "tcp") {
                 TLS_FLOW_CONTROL_CAN_SELECTED = TLS_FLOW_CONTROL;
@@ -1467,7 +1471,7 @@ class Inbound extends XrayCommonClass {
     canShowSegaroParams() {
         // if at least one client use segaro flow, show segaro params
         for (let client of this.clients) {
-            if (client.flow === TLS_FLOW_CONTROL.SEGARO && (this.network === "tcp" || this.network === "http" || this.network === "grpc")) {
+            if ((client.flow === TLS_FLOW_CONTROL.SEGARO || client.flow === TLS_FLOW_CONTROL.SEGARO_UDP443) && (this.network === "tcp" || this.network === "http" || this.network === "grpc")) {
                 return true;
             }
         }
@@ -1671,7 +1675,7 @@ class Inbound extends XrayCommonClass {
             if (type === 'tcp' && !ObjectUtil.isEmpty(flow)) {
                 params.set("flow", flow);
             }
-            if (flow === TLS_FLOW_CONTROL.SEGARO) {
+            if (flow === TLS_FLOW_CONTROL.SEGARO || flow === TLS_FLOW_CONTROL.SEGARO_UDP443) {
                 params.set("flow", flow);
                 if (!ObjectUtil.isEmpty(this.stream.reality.serverRandPacket)) {
                     params.set("serverandpacket", this.stream.reality.serverRandPacket);

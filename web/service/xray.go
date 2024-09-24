@@ -118,6 +118,8 @@ func (s *XrayService) GetXrayConfig() (*xray.Config, error) {
 					}
 					if c["flow"] == "xtls-rprx-vision-udp443" {
 						c["flow"] = "xtls-rprx-vision"
+					}else if (c["flow"] == "xtls-segaro-vision-udp443"){
+						c["flow"] = "xtls-segaro-vision"
 					}
 				}
 				final_clients = append(final_clients, interface{}(c))
