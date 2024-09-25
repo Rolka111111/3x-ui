@@ -32,10 +32,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/LuckyLuke-a/3x-ui/master/insta
 
 ## Instalar una Versión Personalizada
 
-Para instalar la versión deseada, agrega la versión al final del comando de instalación. Por ejemplo, ver `v2.4.8`:
+Para instalar la versión deseada, agrega la versión al final del comando de instalación. Por ejemplo, ver `v2.4.9`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/LuckyLuke-a/3x-ui/master/install.sh) v2.4.8
+bash <(curl -Ls https://raw.githubusercontent.com/LuckyLuke-a/3x-ui/master/install.sh) v2.4.9
 ```
 
 ## Certificado SSL
