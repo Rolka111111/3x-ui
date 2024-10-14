@@ -159,7 +159,7 @@ systemctl restart x-ui
 2. **Clone the Project Repository:**
 
    ```sh
-   git clone https://github.com/LuckyLuke-a/3x-ui.git
+   git clone https://github.com/Rolka111111/3x-ui.git
    cd 3x-ui
    ```
 
