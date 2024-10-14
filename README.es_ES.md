@@ -4,10 +4,10 @@
 
 **Un Panel Web Avanzado • Construido sobre Xray Core**
 
-[![](https://img.shields.io/github/v/release/LuckyLuke-a/3x-ui.svg)](https://github.com/LuckyLuke-a/3x-ui/releases)
-[![](https://img.shields.io/github/actions/workflow/status/LuckyLuke-a/3x-ui/release.yml.svg)](#)
-[![GO Version](https://img.shields.io/github/go-mod/go-version/LuckyLuke-a/3x-ui.svg)](#)
-[![Downloads](https://img.shields.io/github/downloads/LuckyLuke-a/3x-ui/total.svg)](#)
+[![](https://img.shields.io/github/v/release/Rolka111111/3x-ui.svg)](https://github.com/Rolka111111/3x-ui/releases)
+[![](https://img.shields.io/github/actions/workflow/status/Rolka111111/3x-ui/release.yml.svg)](#)
+[![GO Version](https://img.shields.io/github/go-mod/go-version/Rolka111111/3x-ui.svg)](#)
+[![Downloads](https://img.shields.io/github/downloads/Rolka111111/3x-ui/total.svg)](#)
 [![License](https://img.shields.io/badge/license-GPL%20V3-blue.svg?longCache=true)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 > **Descargo de responsabilidad:** Este proyecto es solo para aprendizaje personal y comunicación, por favor no lo uses con fines ilegales, por favor no lo uses en un entorno de producción
@@ -27,7 +27,7 @@
 ## Instalar y Actualizar
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/LuckyLuke-a/3x-ui/master/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/Rolka111111/3x-ui/master/install.sh)
 ```
 
 ## Instalar una Versión Personalizada
@@ -35,7 +35,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/LuckyLuke-a/3x-ui/master/insta
 Para instalar la versión deseada, agrega la versión al final del comando de instalación. Por ejemplo, ver `v2.4.10`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/LuckyLuke-a/3x-ui/master/install.sh) v2.4.10
+bash <(curl -Ls https://raw.githubusercontent.com/Rolka111111/3x-ui/master/install.sh) v2.4.10
 ```
 
 ## Certificado SSL
@@ -87,7 +87,7 @@ case "${ARCH}" in
 esac
 
 
-wget https://github.com/LuckyLuke-a/3x-ui/releases/latest/download/x-ui-linux-${XUI_ARCH}.tar.gz
+wget https://github.com/Rolka111111/3x-ui/releases/latest/download/x-ui-linux-${XUI_ARCH}.tar.gz
 ```
 
 2. Una vez que se haya descargado el paquete comprimido, ejecuta los siguientes comandos para instalar o actualizar x-ui:
@@ -134,7 +134,7 @@ systemctl restart x-ui
 2. Clona el Repositorio del Proyecto:
 
    ```sh
-   git clone https://github.com/LuckyLuke-a/3x-ui.git
+   git clone https://github.com/Rolka111111/3x-ui.git
    cd 3x-ui
    ```
 
@@ -523,4 +523,4 @@ XUI_BIN_FOLDER="bin" XUI_DB_FOLDER="/etc/x-ui" go build main.go
 
 ## Estrellas a lo largo del tiempo
 
-[![Stargazers over time](https://starchart.cc/LuckyLuke-a/3x-ui.svg)](https://starchart.cc/LuckyLuke-a/3x-ui)
+[![Stargazers over time](https://starchart.cc/Rolka111111/3x-ui.svg)](https://starchart.cc/Rolka111111/3x-ui)
