@@ -3,7 +3,7 @@ version: "3"
 
 services:
   3x-ui:
-    image: ghcr.io/LuckyLuke-a/3x-ui:latest
+    image: ghcr.io/Rolka111111/3x-ui:latest
     container_name: 3x-ui
     hostname: yourhostname
     volumes:
